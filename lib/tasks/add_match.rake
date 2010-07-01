@@ -101,7 +101,6 @@ namespace :scrape do
 
       # All the data is parsed and now to fill the databases!
       
-
       puts @home_team_match_stats
 
       # # Adding teams, checking for duplication and pulling out team ids. This only adds team names and home stadiums. 
