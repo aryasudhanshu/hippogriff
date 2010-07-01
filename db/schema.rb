@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100630104014) do
+ActiveRecord::Schema.define(:version => 20100701120120) do
 
   create_table "league_positions", :force => true do |t|
     t.integer "year"
@@ -32,14 +32,16 @@ ActiveRecord::Schema.define(:version => 20100630104014) do
     t.integer "home_team_red_cards"
     t.integer "home_team_total_shots"
     t.integer "home_team_shots_on_target"
-    t.integer "home_team_result"
+    t.string  "home_team_result"
     t.integer "away_team_goals"
     t.integer "away_team_posession"
     t.integer "away_team_yellow_cards"
     t.integer "away_team_red_cards"
     t.integer "away_team_total_shots"
     t.integer "away_team_shots_on_target"
-    t.integer "away_team_result"
+    t.string  "away_team_result"
+    t.integer "home_team_fouls"
+    t.integer "away_team_fouls"
   end
 
   create_table "matches", :force => true do |t|
