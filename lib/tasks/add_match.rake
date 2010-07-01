@@ -6,7 +6,7 @@ namespace :scrape do
 
   desc "Builds a list of URLs on soccernet and saves it to file tmp/urls.txt - 4 weeks at a time"
   task :build_list, :url do |t, args|
-    file = File.open('tmp/urls.txt','a+')
+    file = File.open('tmp/urls.txt','w+')
     url = "http://soccernet.espn.go.com/fixtures?league=eng.1&date=20090813&cc=4716"
     doc = Hpricot(open(url))
     ids = []
@@ -17,7 +17,9 @@ namespace :scrape do
       end
       file.puts id unless id.nil?
     end
-    puts "list on match ids is available in the file tmp/urls.txt"
+    puts "___________________________________________________________________________________________________________________________________"
+    puts "List of match ids is now available in the file tmp/urls.txt. Use \'rake scrape:add_matches_from_list' to begin parsing and adding data."
+    puts "___________________________________________________________________________________________________________________________________"
   end
 
 
@@ -40,58 +42,58 @@ namespace :scrape do
       url = "http://soccernet.espn.go.com/gamecast?id=#{id}&page=stats&cc=4716"
       doc = Hpricot(open(url))
 
-      # # Home Team - v[11] tells if player was in the starting lineup or not
-      # @home_team = {}
-      # count = 1
-      # doc.search("#homeTeamPlayerStats tr:not('.colhead')").each do |row|
-      #   player_stats_array = []
-      #   @player_name = row.search('td a').innerHTML
-      #   row.search('.middle').each do |stat|
-      #     player_stats_array << stat.innerHTML
-      #     if count > 11
-      #       player_stats_array << false
-      #     else
-      #       player_stats_array << true
-      #     end
-      #   end
-      #   @home_team["#{@player_name}"] = player_stats_array
-      #   count = count + 1
-      # end
+      # Home Team - v[11] tells if player was in the starting lineup or not
+      @home_team = {}
+      count = 1
+      doc.search("#homeTeamPlayerStats tr:not('.colhead')").each do |row|
+        player_stats_array = []
+        @player_name = row.search('td a').innerHTML
+        row.search('.middle').each do |stat|
+          player_stats_array << stat.innerHTML
+          if count > 11
+            player_stats_array << false
+          else
+            player_stats_array << true
+          end
+        end
+        @home_team["#{@player_name}"] = player_stats_array
+        count = count + 1
+      end
 
-      # # Away Team - v[11] tells if player was in the starting lineup or not
-      # @away_team = {}
-      # doc.search("#awayTeamPlayerStats tr:not('.colhead')").each do |row|
-      #   player_stats_array = []
-      #   @player_name = row.search('td a').innerHTML
-      #   row.search('.middle').each do |stat|
-      #     player_stats_array << stat.innerHTML
-      #     if count > 11
-      #       player_stats_array << false
-      #     else
-      #       player_stats_array << true
-      #     end
-      #   end
-      #   @away_team["#{@player_name}"] = player_stats_array
-      #   count = count + 1
-      # end
+      # Away Team - v[11] tells if player was in the starting lineup or not
+      @away_team = {}
+      doc.search("#awayTeamPlayerStats tr:not('.colhead')").each do |row|
+        player_stats_array = []
+        @player_name = row.search('td a').innerHTML
+        row.search('.middle').each do |stat|
+          player_stats_array << stat.innerHTML
+          if count > 11
+            player_stats_array << false
+          else
+            player_stats_array << true
+          end
+        end
+        @away_team["#{@player_name}"] = player_stats_array
+        count = count + 1
+      end
 
-      # @home_team_match_stats = []
-      # @away_team_match_stats = []
-      # count = 1
-      # doc.search(".matchstats-wrapper tr:not('.colhead')").each do |row|
-      #   row.search('td[@align=right]').each do |stat|
-      #     if count%2 == 1
-      #       @home_team_match_stats << stat.innerHTML
-      #     else
-      #       @away_team_match_stats << stat.innerHTML
-      #     end
-      #     count = count + 1
-      #   end
-      # end
+      @home_team_match_stats = []
+      @away_team_match_stats = []
+      count = 1
+      doc.search(".matchstats-wrapper tr:not('.colhead')").each do |row|
+        row.search('td[@align=right]').each do |stat|
+          if count%2 == 1
+            @home_team_match_stats << stat.innerHTML
+          else
+            @away_team_match_stats << stat.innerHTML
+          end
+          count = count + 1
+        end
+      end
 
       # All the data is parsed and now to fill the databases!
 
-      puts "----Completed in #{Time.now - @t} seconds, now adding data to the tables----"
+      puts "Completed in #{Time.now - @t} seconds, now adding data to the tables"
       puts
 
     end
