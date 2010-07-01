@@ -88,3 +88,8 @@ Migrating to AddPlayerMatchPerformancesTable (20100630104014)
   [4;36;1mPlayer Load (0.9ms)[0m   [0;1mSELECT * FROM "players" LIMIT 1[0m
   [4;35;1mPlayer Destroy (0.5ms)[0m   [0mDELETE FROM "players" WHERE "id" = 1[0m
   [4;36;1mPlayer Load (0.4ms)[0m   [0;1mSELECT * FROM "players" LIMIT 1[0m
+  [4;36;1mTeam Load (37.4ms)[0m   [0;1mSELECT * FROM "teams" LIMIT 1[0m
+  [4;36;1mPlayer Create (27.0ms)[0m   [0;1mINSERT INTO "players" ("player_name", "player_country", "player_cost", "player_type", "player_team", "team_id") VALUES('Pappu', NULL, NULL, NULL, NULL, NULL)[0m
+  [4;36;1mPlayer Load (0.8ms)[0m   [0;1mSELECT * FROM "players" LIMIT 1[0m
+  [4;35;1mPlayer Destroy (0.4ms)[0m   [0mDELETE FROM "players" WHERE "id" = 2[0m
+  [4;36;1mPlayer Load (0.2ms)[0m   [0;1mSELECT * FROM "players" LIMIT 1[0m

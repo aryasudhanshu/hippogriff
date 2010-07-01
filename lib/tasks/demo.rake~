@@ -1,0 +1,11 @@
+desc "Demo for database connection"
+task :demo do
+  @p = Player.new
+  @p.player_name = "Pappu"
+  if @p.save
+    puts "Saved Successfully"
+  else
+    puts "some error"
+    puts @p.errors
+  end
+end
