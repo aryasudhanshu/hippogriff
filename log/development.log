@@ -93,3 +93,120 @@ Migrating to AddPlayerMatchPerformancesTable (20100630104014)
   [4;36;1mPlayer Load (0.8ms)[0m   [0;1mSELECT * FROM "players" LIMIT 1[0m
   [4;35;1mPlayer Destroy (0.4ms)[0m   [0mDELETE FROM "players" WHERE "id" = 2[0m
   [4;36;1mPlayer Load (0.2ms)[0m   [0;1mSELECT * FROM "players" LIMIT 1[0m
+  [4;36;1mSQL (3.5ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (1.0ms)[0m   [0mSELECT version FROM schema_migrations[0m
+  [4;36;1mSQL (0.7ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to AddTeamsTable (20100630075213)
+Migrating to AddFixturesTable (20100630094217)
+Migrating to AddFixtureResultTable (20100630100214)
+Migrating to AddLeagueTable (20100630102508)
+Migrating to AddPlayersTable (20100630102936)
+Migrating to AddPlayerMatchPerformancesTable (20100630104014)
+Migrating to CreateTeams (20100630120143)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSQLite3::SQLException: table "teams" already exists: CREATE TABLE "teams" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mselect sqlite_version(*)[0m
+  [4;36;1mSQL (1239.6ms)[0m   [0;1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [4;35;1mSQL (169.6ms)[0m   [0mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [4;36;1mSQL (0.6ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to AddTeamsTable (20100630075213)
+  [4;36;1mSQL (0.4ms)[0m   [0;1mCREATE TABLE "teams" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "team_name" varchar(255), "team_home_stadium" varchar(255), "team_capacity" integer, "team_nickname" varchar(255), "team_last_year_position" integer) [0m
+  [4;35;1mSQL (0.1ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('20100630075213')[0m
+Migrating to AddFixturesTable (20100630094217)
+  [4;36;1mSQL (0.3ms)[0m   [0;1mCREATE TABLE "matches" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "match_year" integer, "match_home_team_id" integer, "match_away_team_id" integer, "match_date" date, "match_gameweek" integer, "match_is_played" boolean) [0m
+  [4;35;1mSQL (0.1ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('20100630094217')[0m
+Migrating to AddFixtureResultTable (20100630100214)
+  [4;36;1mSQL (0.4ms)[0m   [0;1mCREATE TABLE "match_results" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "match_id" integer, "home_team_goals" integer, "home_team_posession" integer, "home_team_yellow_cards" integer, "home_team_red_cards" integer, "home_team_total_shots" integer, "home_team_shots_on_target" integer, "home_team_result" integer, "away_team_goals" integer, "away_team_posession" integer, "away_team_yellow_cards" integer, "away_team_red_cards" integer, "away_team_total_shots" integer, "away_team_shots_on_target" integer, "away_team_result" integer) [0m
+  [4;35;1mSQL (0.1ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('20100630100214')[0m
+Migrating to AddLeagueTable (20100630102508)
+  [4;36;1mSQL (0.9ms)[0m   [0;1mCREATE TABLE "league_positions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "year" integer, "position" integer, "team_id" integer, "wins" integer, "draws" integer, "losses" integer, "gs" integer, "ga" integer, "gd" integer, "points" integer) [0m
+  [4;35;1mSQL (0.3ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('20100630102508')[0m
+Migrating to AddPlayersTable (20100630102936)
+  [4;36;1mSQL (1.0ms)[0m   [0;1mCREATE TABLE "players" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "player_name" varchar(255), "player_team" varchar(255), "player_country" varchar(255), "player_cost" integer, "player_type" varchar(255), "team_id" integer) [0m
+  [4;35;1mSQL (0.5ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('20100630102936')[0m
+Migrating to AddPlayerMatchPerformancesTable (20100630104014)
+  [4;36;1mSQL (1.0ms)[0m   [0;1mCREATE TABLE "player_match_performances" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "match_id" integer, "player_id" integer, "player_played" boolean, "player_started" boolean, "player_shots" integer, "player_goals" integer, "player_assists" integer, "player_penalty_misses" integer, "player_yellow_card" integer, "player_red_card" integer) [0m
+  [4;35;1mSQL (0.3ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('20100630104014')[0m
+Migrating to CreateTeams (20100630120143)
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSQLite3::SQLException: table "teams" already exists: CREATE TABLE "teams" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime, "updated_at" datetime) [0m
+  [4;36;1mSQL (0.8ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mSELECT version FROM schema_migrations[0m
+  [4;36;1mSQL (2.4ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (1.4ms)[0m   [0mSELECT version FROM schema_migrations[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.2ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (175.9ms)[0m   [0;1mCREATE TABLE "league_positions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "year" integer, "position" integer, "team_id" integer, "wins" integer, "draws" integer, "losses" integer, "gs" integer, "ga" integer, "gd" integer, "points" integer) [0m
+  [4;35;1mSQL (0.7ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (105.3ms)[0m   [0;1mCREATE TABLE "match_results" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "match_id" integer, "home_team_goals" integer, "home_team_posession" integer, "home_team_yellow_cards" integer, "home_team_red_cards" integer, "home_team_total_shots" integer, "home_team_shots_on_target" integer, "home_team_result" integer, "away_team_goals" integer, "away_team_posession" integer, "away_team_yellow_cards" integer, "away_team_red_cards" integer, "away_team_total_shots" integer, "away_team_shots_on_target" integer, "away_team_result" integer) [0m
+  [4;35;1mSQL (0.8ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (121.0ms)[0m   [0;1mCREATE TABLE "matches" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "match_year" integer, "match_home_team_id" integer, "match_away_team_id" integer, "match_date" date, "match_gameweek" integer, "match_is_played" boolean) [0m
+  [4;35;1mSQL (0.3ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (122.4ms)[0m   [0;1mCREATE TABLE "player_match_performances" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "match_id" integer, "player_id" integer, "player_played" boolean, "player_started" boolean, "player_shots" integer, "player_goals" integer, "player_assists" integer, "player_penalty_misses" integer, "player_yellow_card" integer, "player_red_card" integer) [0m
+  [4;35;1mSQL (0.3ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (99.6ms)[0m   [0;1mCREATE TABLE "players" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "player_name" varchar(255), "player_team" varchar(255), "player_country" varchar(255), "player_cost" integer, "player_type" varchar(255), "team_id" integer) [0m
+  [4;35;1mSQL (1.0ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (118.0ms)[0m   [0;1mCREATE TABLE "teams" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "team_name" varchar(255), "team_home_stadium" varchar(255), "team_capacity" integer, "team_nickname" varchar(255), "team_last_year_position" integer) [0m
+  [4;35;1mSQL (0.4ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (124.0ms)[0m   [0;1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [4;35;1mSQL (169.0ms)[0m   [0mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSELECT version FROM "schema_migrations"[0m
+  [4;36;1mSQL (95.3ms)[0m   [0;1mINSERT INTO "schema_migrations" (version) VALUES ('20100630104014')[0m
+  [4;35;1mSQL (132.7ms)[0m   [0mINSERT INTO "schema_migrations" (version) VALUES ('20100630075213')[0m
+  [4;36;1mSQL (99.6ms)[0m   [0;1mINSERT INTO "schema_migrations" (version) VALUES ('20100630102936')[0m
+  [4;35;1mSQL (132.5ms)[0m   [0mINSERT INTO "schema_migrations" (version) VALUES ('20100630102508')[0m
+  [4;36;1mSQL (88.9ms)[0m   [0;1mINSERT INTO "schema_migrations" (version) VALUES ('20100630100214')[0m
+  [4;35;1mSQL (150.3ms)[0m   [0mINSERT INTO "schema_migrations" (version) VALUES ('20100630094217')[0m
+  [4;36;1mTeam Load (0.4ms)[0m   [0;1mSELECT * FROM "teams" WHERE ("teams"."team_name" = 'Chelsea') LIMIT 1[0m
+  [4;35;1mTeam Create (28.3ms)[0m   [0mINSERT INTO "teams" ("team_home_stadium", "team_name", "team_last_year_position", "team_nickname", "team_capacity") VALUES(NULL, 'Chelsea', NULL, NULL, NULL)[0m
+  [4;36;1mTeam Load (0.7ms)[0m   [0;1mSELECT * FROM "teams" LIMIT 1[0m
+  [4;35;1mTeam Load (1.4ms)[0m   [0mSELECT * FROM "teams" LIMIT 1[0m
+  [4;36;1mPlayer Load (0.2ms)[0m   [0;1mSELECT * FROM "players" WHERE ("players".team_id = 1) [0m
+  [4;35;1mLeaguePosition Load (0.1ms)[0m   [0mSELECT * FROM "league_positions" WHERE ("league_positions".team_id = 1) [0m
+  [4;36;1mTeam Destroy (12.3ms)[0m   [0;1mDELETE FROM "teams" WHERE "id" = 1[0m
+  [4;35;1mTeam Load (0.4ms)[0m   [0mSELECT * FROM "teams" LIMIT 1[0m

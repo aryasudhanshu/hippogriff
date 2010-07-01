@@ -1,0 +1,11 @@
+require 'open-uri'
+require 'hpricot'
+
+desc "Adds a match to the database given its soccernet link"
+task :add_match => :environment do |t, args|
+  url = "http://soccernet.espn.go.com/match?id=270001&league=ENG.1&cc=4716"
+  doc = Hpricot(open(url, :proxy => "http://ramans:vsindpak@172.31.1.227:3128"))
+  teams = doc.search('.game-titleMain')
+  @home_team = teams.split('-')[0]
+  puts @home_team
+end
