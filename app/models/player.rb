@@ -1,3 +1,4 @@
 class Player < ActiveRecord::Base
-  has_and_belongs_to_many :player_match_performances
+  belongs_to :team
+  has_many :player_match_performances
 end

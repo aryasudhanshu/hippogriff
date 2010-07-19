@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100701120120) do
+ActiveRecord::Schema.define(:version => 20100719123851) do
 
   create_table "league_positions", :force => true do |t|
     t.integer "year"
@@ -27,14 +27,14 @@ ActiveRecord::Schema.define(:version => 20100701120120) do
   create_table "match_results", :force => true do |t|
     t.integer "match_id"
     t.integer "home_team_goals"
-    t.integer "home_team_posession"
+    t.integer "home_team_possession"
     t.integer "home_team_yellow_cards"
     t.integer "home_team_red_cards"
     t.integer "home_team_total_shots"
     t.integer "home_team_shots_on_target"
     t.string  "home_team_result"
     t.integer "away_team_goals"
-    t.integer "away_team_posession"
+    t.integer "away_team_possession"
     t.integer "away_team_yellow_cards"
     t.integer "away_team_red_cards"
     t.integer "away_team_total_shots"
@@ -51,6 +51,8 @@ ActiveRecord::Schema.define(:version => 20100701120120) do
     t.date    "match_date"
     t.integer "match_gameweek"
     t.boolean "match_is_played"
+    t.string  "match_home_team_type"
+    t.string  "match_away_team_type"
   end
 
   create_table "player_match_performances", :force => true do |t|
