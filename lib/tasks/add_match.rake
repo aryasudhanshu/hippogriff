@@ -173,7 +173,7 @@ namespace :scrape do
       [@home_team, @away_team].each do |hash|
         hash.each do |name, stats|
           @p = Player.find_or_create_by_player_name(name)          
-          @p.team = Team.find_or_create_by_team_name(@home_team_name)
+          @p.team = Team.find_or_create_by_team_name(@home_team_name.to_s)
           @pmp = PlayerMatchPerformance.new
           @pmp.player = @p
           @pmp.match  = @m
