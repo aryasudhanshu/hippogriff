@@ -28,8 +28,7 @@ namespace :scrape do
     file.each do |id|
       id=id.to_i
       next if id == 0
-      @loop_counter = @loop_counter + 1.00
-      percentage_done = ((@loop_counter/190.00)*100.00).to_i
+      @loop_counter = @loop_counter + 1
       @t = Time.now
       
       url = "http://soccernet.espn.go.com/match?id=#{id}&page=stats&cc=4716"
@@ -106,28 +105,28 @@ namespace :scrape do
 
       # All the data is parsed and now to fill the databases!
       # # Adding teams, checking for duplication and pulling out team ids. This only adds team names and home stadiums. 
-      @t1 = Team.find_or_create_by_team_name(@home_team_name)
-      @t1.team_home_stadium = @home_team_stadium
+      @t1 = Team.find_or_create_by_name(@home_team_name)
+      @t1.home_stadium = @home_team_stadium
       if not @t1.save
         puts "Was not able to save home team info to the database"
         puts @t1.errors
       end
       
-      @t2 = Team.find_or_create_by_team_name(@away_team_name)
+      @t2 = Team.find_or_create_by_name(@away_team_name)
       if not @t2.save
         puts "Was not able to save away team info to the database"
         puts @t2.errors
       end
       
       # Adding match TODO - add gameweek information
-      @m                    = Match.new
-      @m.match_home_team_id = @t1.id
-      @m.match_away_team_id = @t2.id
-      @m.match_date         = @match_date
-      @m.match_is_played    = true
-      @m.match_year         = @match_date.split(',')[2]
-      @m.match_home_team_type = "Team"
-      @m.match_away_team_type = "Team"
+      @m              = Match.new
+      @m.home_team_id = @t1.id
+      @m.away_team_id = @t2.id
+      @m.date         = @match_date
+      @m.is_played    = true
+      @m.year         = @match_date.split(',')[2]
+      @m.home_team_type = "Team"
+      @m.away_team_type = "Team"
       if not @m.save
         puts "Was not able to save match to database"
         puts @m.errors
@@ -172,18 +171,18 @@ namespace :scrape do
       # Add player match performance
       [@home_team, @away_team].each do |hash|
         hash.each do |name, stats|
-          @p = Player.find_or_create_by_player_name(name)          
-          @p.team = Team.find_or_create_by_team_name(@home_team_name.to_s)
+          @p = Player.find_or_create_by_name(name)          
+          @p.team = Team.find_or_create_by_name(@home_team_name.to_s)
           @pmp = PlayerMatchPerformance.new
           @pmp.player = @p
           @pmp.match  = @m
-          @pmp.player_played       = true
-          @pmp.player_started      = stats[10]
-          @pmp.player_shots        = stats[0]
-          @pmp.player_goals        = stats[1]
-          @pmp.player_assists      = stats[2]
-          @pmp.player_yellow_card  = stats[8]
-          @pmp.player_red_card     = stats[9]
+          @pmp.played       = true
+          @pmp.started      = stats[10]
+          @pmp.shots        = stats[0]
+          @pmp.goals        = stats[1]
+          @pmp.assists      = stats[2]
+          @pmp.yellow_card  = stats[8]
+          @pmp.red_card     = stats[9]
           @p.save
           @pmp.save
         end
@@ -191,7 +190,7 @@ namespace :scrape do
 
 
       puts "                                         Data added in #{Time.now - @t} seconds. NEXT MATCH."
-      puts "____________________________________________________________________________________________[#{percentage_done}%]_____________"
+      puts "____________________________________________________________________________________________[#{@loop_counter}%]_____________"
     end
   end
 end

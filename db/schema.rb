@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100719123851) do
+ActiveRecord::Schema.define(:version => 20100721191917) do
 
   create_table "league_positions", :force => true do |t|
     t.integer "year"
@@ -45,44 +45,44 @@ ActiveRecord::Schema.define(:version => 20100719123851) do
   end
 
   create_table "matches", :force => true do |t|
-    t.integer "match_year"
-    t.integer "match_home_team_id"
-    t.integer "match_away_team_id"
-    t.date    "match_date"
-    t.integer "match_gameweek"
-    t.boolean "match_is_played"
-    t.string  "match_home_team_type"
-    t.string  "match_away_team_type"
+    t.integer "year"
+    t.integer "home_team_id"
+    t.integer "away_team_id"
+    t.date    "date"
+    t.integer "gameweek"
+    t.boolean "is_played"
+    t.string  "home_team_type"
+    t.string  "away_team_type"
   end
 
   create_table "player_match_performances", :force => true do |t|
     t.integer "match_id"
     t.integer "player_id"
-    t.boolean "player_played"
-    t.boolean "player_started"
-    t.integer "player_shots"
-    t.integer "player_goals"
-    t.integer "player_assists"
-    t.integer "player_penalty_misses"
-    t.integer "player_yellow_card"
-    t.integer "player_red_card"
+    t.boolean "played"
+    t.boolean "started"
+    t.integer "shots"
+    t.integer "goals"
+    t.integer "assists"
+    t.integer "penalty_misses"
+    t.integer "yellow_card"
+    t.integer "red_card"
   end
 
   create_table "players", :force => true do |t|
-    t.string  "player_name"
-    t.string  "player_team"
-    t.string  "player_country"
-    t.integer "player_cost"
-    t.string  "player_type"
+    t.string  "name"
+    t.string  "team"
+    t.string  "country"
+    t.integer "cost"
+    t.string  "type"
     t.integer "team_id"
   end
 
   create_table "teams", :force => true do |t|
-    t.string  "team_name"
-    t.string  "team_home_stadium"
-    t.integer "team_capacity"
-    t.string  "team_nickname"
-    t.integer "team_last_year_position"
+    t.string  "name"
+    t.string  "home_stadium"
+    t.integer "capacity"
+    t.string  "nickname"
+    t.integer "last_year_position"
   end
 
 end
