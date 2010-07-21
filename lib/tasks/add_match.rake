@@ -29,7 +29,7 @@ namespace :scrape do
       id=id.to_i
       next if id == 0
       @loop_counter = @loop_counter + 1.00
-      percentage_done = ((@loop_counter/760.00)*100.00).to_i
+      percentage_done = ((@loop_counter/190.00)*100.00).to_i
       @t = Time.now
       
       url = "http://soccernet.espn.go.com/match?id=#{id}&page=stats&cc=4716"
@@ -45,7 +45,7 @@ namespace :scrape do
       
       
       puts
-      puts "           #{@home_team_name.to_s.upcase}            vs            #{@away_team_name.to_s.upcase}                [#{percentage_done}]%"
+      puts "----------------------#{@home_team_name.to_s.upcase}            vs            #{@away_team_name.to_s.upcase}----------------------"
       puts "(at #{@home_team_stadium} on #{@match_date})"
 
 
@@ -191,7 +191,7 @@ namespace :scrape do
 
 
       puts "Data added in #{Time.now - @t} seconds. Moving on to the NEXT match in the list."
-      puts "---------------------------------------------------------------------------------------------"
+      puts "----------------------------------------------------------------------------------[#{percentage_done}%]-----------"
     end
   end
 end
