@@ -23,24 +23,31 @@ namespace :scrape do
 
   desc "Adds a match to the database given its soccernet link"
   task :add_matches_from_list => :environment do 
-    file = File.open('tmp/urls.txt')
+    file = File.open('tmp/urls.txt', 'r')
+    @loop_counter = 0.00
     file.each do |id|
       id=id.to_i
       next if id == 0
+      @loop_counter = @loop_counter + 1.00
+      percentage_done = ((@loop_counter/760.00)*100.00).to_i
       @t = Time.now
+      
       url = "http://soccernet.espn.go.com/match?id=#{id}&page=stats&cc=4716"
       doc = Hpricot(open(url))
 
       # Teams and other data
-      @home_team_name    = doc.search('.boxscore-left .gamehead td')[2].innerHTML.gsub("\t","").gsub("\n","")
-      @away_team_name    = doc.search('.boxscore-right .gamehead td')[1].innerHTML.gsub("\t","").gsub("\n","")
-      @home_team_stadium = doc.search('.boxscore-left')[0].search('.oddrow td')[1].innerHTML.gsub("\t","").gsub("\n","").split(',')[0].strip
       @match_date        = doc.search('.oots h5').innerHTML.gsub("\n","").gsub("\t","")
-
-      puts "----- Parsing data for #{@home_team_name} vs #{@away_team_name} played on #{@match_date} at #{@home_team_stadium} -----"
-
       url = "http://soccernet.espn.go.com/gamecast?id=#{id}&page=stats&cc=4716"
       doc = Hpricot(open(url))
+      @home_team_stadium = doc.search('.info-mod h1').to_s.match(/(<\/strong>)[a-zA-Z\t\n\ ]+/)[0].gsub("\n","").gsub("\t","").gsub("<\/strong>","")
+      @home_team_name    = doc.search('.matchstats-wrapper .colhead td')[1].innerHTML.to_s.gsub("\n","").gsub("\t","")
+      @away_team_name    = doc.search('.matchstats-wrapper .colhead td')[2].innerHTML.to_s.gsub("\n","").gsub("\t","")
+      
+      
+      puts
+      puts "           #{@home_team_name.to_s.upcase}            vs            #{@away_team_name.to_s.upcase}                [#{percentage_done}]%"
+      puts "(at #{@home_team_stadium} on #{@match_date})"
+
 
       #Goals
       @goals = doc.search('.game-titleMain span').innerHTML.split('&nbsp;-&nbsp;')
@@ -94,10 +101,8 @@ namespace :scrape do
         end
       end
 
-      puts "Completed in #{Time.now - @t} seconds, now adding data to the tables"
+      puts "-> Completed in #{Time.now - @t} seconds, now ADDING DATA to the tables"
       @t = Time.now
-
-      debugger
 
       # All the data is parsed and now to fill the databases!
       # # Adding teams, checking for duplication and pulling out team ids. This only adds team names and home stadiums. 
@@ -185,9 +190,8 @@ namespace :scrape do
       end
 
 
-      puts "Data added in #{Time.now - @t} seconds. Moving on to the next match in the list."
+      puts "Data added in #{Time.now - @t} seconds. Moving on to the NEXT match in the list."
       puts "---------------------------------------------------------------------------------------------"
-      puts
     end
   end
 end
