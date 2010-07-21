@@ -45,7 +45,7 @@ namespace :scrape do
       
       
       puts
-      puts "----------------------#{@home_team_name.to_s.upcase}            vs            #{@away_team_name.to_s.upcase}----------------------"
+      puts "______________________#{@home_team_name.to_s.upcase}            vs            #{@away_team_name.to_s.upcase}______________________________"
       puts "(at #{@home_team_stadium} on #{@match_date})"
 
 
@@ -190,8 +190,8 @@ namespace :scrape do
       end
 
 
-      puts "Data added in #{Time.now - @t} seconds. Moving on to the NEXT match in the list."
-      puts "----------------------------------------------------------------------------------[#{percentage_done}%]-----------"
+      puts "                                         Data added in #{Time.now - @t} seconds. NEXT MATCH."
+      puts "____________________________________________________________________________________________[#{percentage_done}%]_____________"
     end
   end
 end
